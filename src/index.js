@@ -1,35 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// const HelloWorld = () => (
-//     <div>HELLO WORLD</div>
-// );
+const ToDoList = (props) => (
+    <ul>
+        {props.todos.map(todo =>
+        <ToDoListItem todo ={todo} />
+        )}
+    </ul>
+);
 
-// const GroceryList = () => (
-//     <ul>
-//         <li>cucumber</li>
-//         <li>kale</li>
-//         <li>당근3</li>
-//         <li>당근4</li>
-//         <li>당근5</li>
-//     </ul>
-// )
+class ToDoListItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            done: false
+        };
+    }
 
-// ReactDOM.render(<GroceryList />, document.getElementById("root"));
+    onListItemClick() {
+        this.setState({
+            done: !this.state.done
+        })
+    }
 
-const ToDoList = (props) => {
-    const onListItemClick = (event) => {
-        console.log('I got clicked');
+    render() {
+
+        const style = {
+            textDecoration: this.state.done ? 'line-through' : 'none'
+        };
+
+        return (
+            <li style={style} onClick={this.onListItemClick.bind(this)}>{this.props.todo}</li>
+        )
     };
-
-    return (
-      <ul>
-        <li onClick={onListItemClick}>{props.todo[0]}</li>
-        <li>{props.todo[1]}</li>
-        <li>{props.todo[2]}</li>
-      </ul>        
-    );
-};
+}
 
 const App = () => (
     <div>
@@ -43,3 +47,5 @@ const App = () => (
         />
     </div>
 )
+
+ReactDOM.render(<App />, document.getElementById("root"));
