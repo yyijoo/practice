@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const ToDoList = (props) => (
+const GroceryList = (props) => (
     <ul>
         {props.todos.map(todo =>
-        <ToDoListItem todo ={todo} />
+        <GroceryListItem todo ={todo} />
         )}
     </ul>
 );
 
-class ToDoListItem extends React.Component {
+class GroceryListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            done: false
+            done: false,
+            mouseOver: false
         };
     }
 
@@ -23,14 +24,22 @@ class ToDoListItem extends React.Component {
         })
     }
 
-    render() {
+    onMouseOverEvent() {
+        this.setState({
+            mouseOver: !this.state.mouseOver
+        })
+    }
 
+    render() {
         const style = {
-            textDecoration: this.state.done ? 'line-through' : 'none'
+            textDecoration: this.state.done ? 'line-through' : 'none',
+            fontWeight: this.state.mouseOver ? 'bold' : 'normal'
         };
 
         return (
-            <li style={style} onClick={this.onListItemClick.bind(this)}>{this.props.todo}</li>
+            <li style={style} 
+            onClick={this.onListItemClick.bind(this)} 
+            onMouseOver={this.onMouseOverEvent.bind(this)} onMouseOut={this.onMouseOverEvent.bind(this)}>{this.props.todo}</li>
         )
     };
 }
@@ -38,11 +47,11 @@ class ToDoListItem extends React.Component {
 const App = () => (
     <div>
         <h2>My ToDo List</h2>
-        <ToDoList
+        <GroceryList
           todos={[
-              'Learn React',
-              'Crush Recast.ly',
-              'Maybe sleep',
+              '맛있는 당근',
+              '더 맛있는 당근',
+              '최고로 맛있는 당근',
           ]} 
         />
     </div>
